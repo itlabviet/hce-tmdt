@@ -1,10 +1,16 @@
 <?php get_header(); ?>
 
-
+<?php 
+	$category = get_queried_object();
+	// echo "<pre>";
+	// var_dump($categories);
+	// echo "<pre>";
+	// die;
+ ?>
 	<!-- Title Page -->
 
 	<h2 class="l-text2 t-center">
-		Kinh nghiệm du lịch
+		<?php echo $category->cat_name; ?>
 	</h2>
 </section>
 

@@ -59,16 +59,41 @@ ddsmoothmenu.init({
             <div id="site_title"><a href="#">IEnjoy</a></div>
             <div id="templatemo_menu" class="ddsmoothmenu">
                 <ul>
-                    <li><a href="http://localhost:8888/hce-tmdt" class="selected">Trang chủ</a></li>
+                    <?php 
+                     $menu_items =  wp_get_nav_menu_items( "Header Menu", $args = array() );
+                    $childMenu = array();
+                    foreach ($menu_items as $menu) {
+                        if ($menu->menu_item_parent != 0) {
+                            $childMenu[$menu->menu_item_parent][] = $menu;
+                        }
+                    }
+                    foreach ($menu_items as $menu) {
+                         ?> 
+                         <li>
+                         <?php
+                        if ($menu->menu_item_parent == 0) {
+                      ?>
+                        <a href="<?php echo $menu->url; ?>"><?php echo $menu->title; ?></a>
+                    <?php
+                        if (array_key_exists($menu->ID, $childMenu)) {
+                            ?>
+                            <ul>
+                            <?php 
+                            foreach ($childMenu[$menu->ID] as $child) {
+                            ?>
+                            <li><a href="<?php echo $child->url; ?>"><?php echo $child->title; ?></a></li>
+                            <?php 
+                            }
+                            ?>
+                        </ul>
+                            <?php
+                        }
+                     }  ?>
+                </li>
+                 <?php } ?>
+                    <!-- 
                     <li><a href="<?php echo get_template_directory_uri(); ?>/templatemo_beauty/khamphahue.html" ">Khám phá Huế</a>
-                       <ul><li><span class="top"></span><span class="bottom"></span></li>
-                            <li><a href="food.html ">Ẩm thực</a></li>
-
-                            <li><a href="giaitri.html">Giải trí</a></li>
-                            <li><a href="disan.html">Di sản</a></li>
-                            
-                            
-                        </ul> 
+                       
                     </li>
                     <li><a href="http://localhost:8888/hce-tmdt/category/tour/" >Kinh nghiệm du lịch</a>
                          
@@ -76,7 +101,7 @@ ddsmoothmenu.init({
                     
                     <li><a href="tour.html" >Tour</a>
                         
-                    </li>
+                    </li> -->
                        
 
                     
